@@ -48,18 +48,15 @@
         <div class="row">
           <div class="col-md-8">
             <div class="form_container">
-              <form name="" action="">
+              <form name="Permintaan Banner" action="">
                 <div>
-                  <input type="date" class="form-control" id="liveDate" disabled />
+                  <input class="form-control" type="text" name="nama" id="" placeholder="Masukan Nama Lengkap" />
                 </div>
                 <div>
-                  <input class="form-control" type="text" name="" id="" placeholder="Masukan Nama Lengkap" />
+                  <textarea id="" cols="15" name="deskripsi" rows="15" class="form-control" placeholder="Masukan Deskripsi"></textarea>
                 </div>
                 <div>
-                  <textarea id="" cols="15" rows="15" class="form-control" placeholder="Masukan Deskripsi"></textarea>
-                </div>
-                <div>
-                  <select class="form-control nice-select wide">
+                  <select class="form-control nice-select wide" name="outlet">
                     <option value="" disabled selected>Select Outlet</option>
                     <option value="GJB-Merdeka">GJB-Merdeka</option>
                     <option value="GJB-Serpong 1">GJB-Serpong 1</option>
@@ -387,12 +384,6 @@
               </form>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card" style="width: 20rem">
-              <img src="/images/RajaGadai1306.JPG" class="card-img-top" alt="..." />
-              <div class="card-body"></div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -421,6 +412,9 @@
     </script>
 
     <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzLKqdaMlmwccf24RNR5QhslGBXpdiqTuEcVCkbHUv5DgeQXs5_xjOwr7PNPOCFHYQG/exec";
+      const form = document.forms["Permintaan Banner"];
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         fetch(scriptURL, { method: "POST", body: new FormData(form) })
