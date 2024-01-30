@@ -47,6 +47,10 @@
         </div>
         <div class="row">
           <div class="col-md-8">
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+              <strong>Selamat</strong> Pengajuan anda telah tersimpan
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <div class="form_container">
               <form name="Permintaan Banner" action="">
                 <div>
@@ -379,7 +383,12 @@
                 </div>
                 <br />
                 <div class="btn_box">
-                  <button type="submit">Submit</button>
+                  <button type="submit" class="btn btn-primary btn-kirim">Submit</button>
+
+                  <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                  </button>
                 </div>
               </form>
             </div>
@@ -390,35 +399,23 @@
     <!-- end book section -->
 
     <script>
-      // Ambil elemen input date
-      const liveDateInput = document.getElementById("liveDate");
-
-      // Fungsi untuk mendapatkan tanggal saat ini dalam format YYYY-MM-DD
-      function getCurrentDate() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0"); // Januari dimulai dari 0
-        const day = String(now.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      }
-
-      // Atur nilai awal input date saat halaman dimuat
-      liveDateInput.value = getCurrentDate();
-
-      // Tambahkan event listener untuk mengupdate nilai input date sesuai dengan tanggal saat ini
-      setInterval(function () {
-        liveDateInput.value = getCurrentDate();
-      }, 1000); // Update setiap detik (1000 milidetik)
-    </script>
-
-    <script>
       const scriptURL = "https://script.google.com/macros/s/AKfycbzLKqdaMlmwccf24RNR5QhslGBXpdiqTuEcVCkbHUv5DgeQXs5_xjOwr7PNPOCFHYQG/exec";
       const form = document.forms["Permintaan Banner"];
+      const btnKirim = document.querySelector(".btn-kirim");
+      const btnLoading = document.querySelector(".btn-loading");
+      const myAlert = document.querySelector(".my-alert");
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        // ketika tombol submit di submit
+        // tampilkan tombol loading, hilangkan tombol kirim
+        btnLoading.classList.toggle("d-none");
+        btnKirim.classList.toggle("d-none");
         fetch(scriptURL, { method: "POST", body: new FormData(form) })
           .then((response) => {
+            btnLoading.classList.toggle("d-none");
+            btnKirim.classList.toggle("d-none");
+            form.reset();
             if (response.ok) {
               // Formulir berhasil dikirim, tampilkan SweetAlert 2
               Swal.fire({
